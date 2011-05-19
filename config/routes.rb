@@ -1,5 +1,27 @@
 Proto4::Application.routes.draw do
-  devise_for :users
+
+
+  get "specs/index"
+
+  get "specs/edit"
+
+  get "profiles/index"
+
+  get "profiles/show"
+
+  devise_for :users,   :controllers  => {:registrations => 'users'}
+  resources :pages
+  resources :users
+  
+  #match '/register', :to => 'users#new'
+  match '/signin',  :to => 'sessions#new'
+  match '/signout', :to => 'sessions#destroy'
+  match '/contact', :to => 'pages#contact'
+  match '/about',   :to => 'pages#about'
+  match '/help',    :to => 'pages#help'
+  match 'profile/:username' => "profiles#show"
+
+  root :to => 'pages#home'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
